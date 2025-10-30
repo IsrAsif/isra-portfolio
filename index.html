@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Isra Asif — Portfolio</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Meta for theme color -->
+  <meta name="theme-color" content="#0f1720">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="nav-wrap" role="banner">
+    <nav class="nav container" role="navigation" aria-label="Main navigation">
+      <a class="brand" href="#home">Isra <span>Asif</span></a>
+
+      <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
+        <span class="menu-icon">☰</span>
+      </button>
+
+      <ul id="navList" class="nav-list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="ISRA_ASIF_Resume.pdf" class="btn btn-primary" download>Download CV</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <main id="home">
+    <section class="hero container" aria-label="Introduction">
+      <div class="hero-left">
+        <h1 class="hero-title">Hi, I’m <span>Isra Asif</span></h1>
+        <p class="hero-sub">
+          Motivated Computer Science student passionate about software development, data structures, networking, and web technologies.
+          Experienced in C++, assembly programming, and network configuration using Cisco Packet Tracer, VMware & UltraISO.
+        </p>
+
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#contact">Get in Touch</a>
+          <a class="btn btn-ghost" href="#projects">View Projects</a>
+        </div>
+
+        <div class="meta">
+          <span>📧 asifisra2@gmail.com</span>
+          <span>•</span>
+          <span>📞 +92 334 7987572</span>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="profile-frame">
+          <!-- Replace 'profile.jpg' with your photo -->
+          <img src="image.png" alt="Isra Asif — profile photo" class="profile-photo">
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="section container">
+      <h2 class="section-title">Professional Summary</h2>
+      <p class="lead">
+        Eager to apply technical and analytical skills to impactful academic or research projects. I enjoy turning ideas into reality
+        through problem-solving, creative design, and efficient coding. Experienced with DSA, network configuration, web technologies, and AI tools.
+      </p>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="section container">
+      <h2 class="section-title">Projects</h2>
+
+      <div class="cards-grid">
+        <article class="card">
+          <div class="card-head">
+            <h3>SmartLIB — Web & Mobile Application</h3>
+            <time datetime="2025-04">April 2025 — Present</time>
+          </div>
+          <p class="muted">Developing a smart library management system accessible via both web and mobile platforms.</p>
+          <p><strong>Tech Stack:</strong> HTML, CSS, JavaScript, SQL (phpMyAdmin)</p>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>University Complaints Management System (UCMS)</h3>
+            <time datetime="2025-04">April 2025</time>
+          </div>
+          <p class="muted">Centralized web-based system for reporting & tracking complaints from students, faculty, and staff.</p>
+          <p><strong>Tech Stack:</strong> HTML, CSS, JavaScript, SQL (phpMyAdmin)</p>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>Sudoku Game (AI Project)</h3>
+            <time datetime="2024-11">Nov 2024</time>
+          </div>
+          <p class="muted">AI-powered Sudoku solver/generator using the Backtracking algorithm with a Tkinter GUI.</p>
+          <p><strong>Tech Stack:</strong> Python, Tkinter, NumPy, Spyder</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="section container">
+      <h2 class="section-title">Technical Skills</h2>
+      <ul class="skills-grid">
+        <li class="skill">C++</li>
+        <li class="skill">Python (Spyder)</li>
+        <li class="skill">SQL / phpMyAdmin</li>
+        <li class="skill">HTML / CSS / JavaScript</li>
+        <li class="skill">React.js</li>
+        <li class="skill">Tailwind CSS (familiar)</li>
+        <li class="skill">VS Code</li>
+        <li class="skill">Canva (Design)</li>
+        <li class="skill">Cisco Packet Tracer / VMware / UltraISO</li>
+        <li class="skill">DSA — BFS / DFS / Backtracking / Hashing</li>
+      </ul>
+    </section>
+
+    <!-- ===== EDUCATION ===== -->
+    <section id="education" class="section container">
+      <h2 class="section-title">Education</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>Bachelor of Science in Computer Science</h3>
+          <p>Fatima Jinnah Women University — Oct 2023 – Present (Expected 2027)</p>
+          <p class="muted">Relevant Coursework: Data Structures, Operating Systems, Advanced DBMS, Software Engineering</p>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Intermediate in Computer Science (ICS)</h3>
+          <p>Army Public School & College Pasban, Westridge III — Aug 2021 – Aug 2023</p>
+        </div>
+
+        <div class="timeline-item">
+          <h3>Matriculation (Science)</h3>
+          <p>Army Public School & College Pasban, Westridge III — Aug 2019 – Aug 2021</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CERTIFICATIONS ===== -->
+    <section id="certifications" class="section container">
+      <h2 class="section-title">Certifications & Programs</h2>
+      <ul class="cert-list">
+        <li>Aspire Leaders Program — Cohort III (Aspire Institute, Harvard University Initiative)</li>
+        <li>OMLAS Champions Empowerment Program 2025 — Leadership, SDGs, Social Entrepreneurship</li>
+        <li>Google Project Management Professional Certificate — Google — Coursera</li>
+
+        <li>
+          <a href="https://www.coursera.org/account/accomplishments/verify/6HU7QYKDS0AJ" target="_blank" rel="noopener">
+            Unordered Data Structures — University of Illinois Urbana-Champaign — Coursera
+          </a>
+        </li>
+
+        <li>
+          <a href="https://www.coursera.org/account/accomplishments/verify/C18QGHGJPZYV" target="_blank" rel="noopener">
+            Ordered Data Structures — University of Illinois Urbana-Champaign — Coursera
+          </a>
+        </li>
+
+        <li>
+          <a href="https://www.coursera.org/account/accomplishments/verify/OCLV1G2B6I7S" target="_blank" rel="noopener">
+            Conversational English Skills — Tsinghua University — Coursera
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+<section id="contact" class="section container">
+  <h2 class="section-title">Contact</h2>
+  <p class="lead">Let’s connect for collaboration or opportunities.</p>
+  <div class="contact-row">
+    <a class="btn btn-primary" href="mailto:asifisra2@gmail.com">Email</a>
+    <a class="btn btn-ghost" href="https://www.linkedin.com/in/isra-asif-3731852b8/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn btn-ghost" href="https://github.com/IsrAsif" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 Isra Asif — Fatima Jinnah Women University</small>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
