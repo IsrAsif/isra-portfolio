@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isra Asif — Portfolio</title>
+  <meta name="description" content="Isra Asif — Computer Science student at FJWU. Passionate about software development, AI, and web technologies.">
+  <meta name="author" content="Isra Asif">
+  <meta name="theme-color" content="#6366f1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        fontFamily: {
+          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          display: ['"Space Grotesk"', 'sans-serif'],
+        },
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            secondary: '#8b5cf6',
+            dark: '#050507',
+            surface: '#0c0c10',
+          },
+          animation: {
+            'marquee': 'marquee 30s linear infinite',
+            'spin-slow': 'spin 15s linear infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'gradient-x': 'gradient-x 4s ease infinite',
+          },
+          keyframes: {
+            marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } },
+            float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-12px)' } },
+            'gradient-x': { '0%,100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-slate-50 text-slate-800 dark:bg-dark dark:text-slate-200 transition-colors duration-500 overflow-x-hidden">
+
+  <!-- Noise overlay -->
+  <div class="fixed inset-0 z-[1] bg-noise pointer-events-none opacity-30 mix-blend-overlay"></div>
+
+  <!-- Preloader -->
+  <div id="preloader" class="fixed inset-0 z-[9999] bg-slate-50 dark:bg-dark flex items-center justify-center">
+    <div class="flex flex-col items-center gap-4">
+      <div class="relative w-16 h-16">
+        <div class="absolute inset-0 border-4 border-slate-200 dark:border-white/10 rounded-full"></div>
+        <div class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin"></div>
+      </div>
+      <span class="text-sm font-bold tracking-widest uppercase animate-pulse text-slate-500">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Background grid -->
+  <div class="fixed inset-0 z-0 bg-grid-pattern pointer-events-none"></div>
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none opacity-40 dark:opacity-15 z-0"></div>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+    <nav class="bg-white/70 dark:bg-surface/70 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-full px-6 py-3 flex items-center gap-8 shadow-sm transition-all duration-300 w-full max-w-4xl justify-between md:justify-start reveal-on-scroll">
+      <a href="#" class="text-xl font-bold font-display tracking-tight text-slate-900 dark:text-white hoverable magnetic-btn relative z-20">
+        isra<span class="text-primary">.</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium ml-auto relative z-20" id="desktop-menu">
+        <a href="#about"          class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">About</a>
+        <a href="#projects"       class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Projects</a>
+        <a href="#skills"         class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Skills</a>
+        <a href="#education"      class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Education</a>
+        <a href="#certifications" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Certs</a>
+        <a href="#contact" class="px-5 py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-xs hover:scale-105 transition-transform hoverable magnetic-btn">Contact</a>
+      </div>
+
+      <div class="flex items-center gap-3 md:ml-4 border-l border-slate-200 dark:border-white/10 pl-4 md:pl-6 relative z-20">
+        <button id="theme-toggle" aria-label="Toggle dark mode" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors hoverable magnetic-btn">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="mobile-menu-btn" aria-label="Open menu" class="md:hidden text-slate-900 dark:text-white p-1 hoverable magnetic-btn">
+          <i class="fas fa-bars text-lg"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-300">
+    <a href="#about"          class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">About</a>
+    <a href="#projects"       class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Projects</a>
+    <a href="#skills"         class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Skills</a>
+    <a href="#education"      class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Education</a>
+    <a href="#certifications" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Certifications</a>
+    <a href="#contact"        class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Contact</a>
+    <button id="close-menu" aria-label="Close menu" class="absolute top-8 right-8 text-slate-500 hover:text-black dark:hover:text-white hoverable">
+      <i class="fas fa-times text-2xl"></i>
+    </button>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section id="home" class="section-spy relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <div class="container mx-auto px-6 relative z-10 max-w-6xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Left -->
+        <div class="text-center lg:text-left order-2 lg:order-1">
+          <div class="hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-sm mb-6">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Open to Opportunities · 2025</span>
+          </div>
+
+          <h1 class="font-display text-5xl md:text-7xl lg:text-[6rem] font-bold leading-[1.1] md:leading-[0.95] tracking-tight mb-6 text-slate-900 dark:text-white">
+            <div class="hero-heading-line overflow-hidden"><span class="block">Building</span></div>
+            <div class="hero-heading-line overflow-hidden pb-2">
+              <span class="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary animate-gradient-x bg-[length:200%_auto]">Digital</span>
+            </div>
+            <div class="hero-heading-line overflow-hidden"><span class="block">Futures.</span></div>
+          </h1>
+
+          <p class="hero-description text-lg text-slate-600 dark:text-slate-400 max-w-md mx-auto lg:mx-0 mb-10 leading-relaxed">
+            CS student at <span class="text-slate-900 dark:text-white font-semibold">Fatima Jinnah Women University</span> —
+            passionate about software development, AI, and turning ideas into real-world applications.
+          </p>
+
+          <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href="#projects" class="group relative px-8 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-black rounded-full font-bold overflow-hidden hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10 hoverable magnetic-btn">
+              <span class="relative z-10">View My Projects</span>
+              <div class="absolute inset-0 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+            </a>
+            <a href="ISRA_ASIF_Resume.pdf" download class="flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border border-slate-200 dark:border-white/20 hover:border-primary hover:text-primary transition-colors hoverable magnetic-btn font-semibold text-sm">
+              <i class="fas fa-download text-xs"></i> Download CV
+            </a>
+          </div>
+        </div>
+
+        <!-- Right - Profile Image -->
+        <div class="hero-image-container relative h-[400px] md:h-[560px] flex items-center justify-center order-1 lg:order-2">
+          <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div class="hero-circle-outer absolute w-64 h-64 md:w-96 md:h-96 border border-slate-200 dark:border-white/10 rounded-full animate-spin-slow"></div>
+          <div class="hero-circle-middle absolute w-48 h-48 md:w-72 md:h-72 border border-dashed border-slate-300 dark:border-white/20 rounded-full animate-spin-slow [animation-direction:reverse]"></div>
+
+          <div class="hero-profile-img relative w-52 h-52 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-white dark:border-white/10 shadow-2xl animate-float z-10 group cursor-pointer hoverable">
+            <img src="images\image.png" alt="Isra Asif" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+          </div>
+
+          <!-- Floating badge top -->
+          <div class="absolute top-8 right-4 md:right-0 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl px-4 py-3 shadow-lg flex items-center gap-3 floating-card reveal-on-scroll">
+            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary text-sm"><i class="fas fa-graduation-cap"></i></div>
+            <div>
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">University</div>
+              <div class="text-xs font-bold text-slate-900 dark:text-white">FJWU · 2027</div>
+            </div>
+          </div>
+
+          <!-- Floating badge bottom -->
+          <div class="absolute bottom-12 left-0 md:-left-8 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl px-4 py-3 shadow-lg flex items-center gap-3 floating-card-2 reveal-on-scroll delay-200">
+            <div class="w-8 h-8 bg-secondary/10 rounded-full flex items-center justify-center text-secondary text-sm"><i class="fas fa-code"></i></div>
+            <div>
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Focus</div>
+              <div class="text-xs font-bold text-slate-900 dark:text-white">CS & AI Dev</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT / BENTO GRID ============ -->
+  <section id="about" class="section-spy py-20 bg-white/50 dark:bg-white/[0.02] border-y border-slate-200 dark:border-white/5 backdrop-blur-sm relative z-10">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="font-display text-4xl font-bold text-slate-900 dark:text-white mb-12 reveal-on-scroll">My Arsenal<span class="text-primary">.</span></h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 md:h-[500px]">
+
+        <!-- Card 1: Tech marquee -->
+        <div class="bento-card spotlight-card col-span-1 md:col-span-2 bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hoverable reveal-on-scroll">
+          <div class="spotlight-overlay"></div>
+          <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+          <div class="z-10">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Core Technologies</h3>
+            <p class="text-slate-500 text-sm">The tools I use to build and ship projects.</p>
+          </div>
+          <div class="absolute bottom-8 left-0 right-0 w-full overflow-hidden">
+            <div class="flex gap-8 animate-marquee whitespace-nowrap opacity-40 group-hover:opacity-100 transition-opacity">
+              <span class="text-4xl font-display font-bold text-slate-400 dark:text-slate-600">C++ · PYTHON · HTML · CSS · JS · SQL · REACT · TAILWIND · CISCO · VMware · DSA · AI</span>
+              <span class="text-4xl font-display font-bold text-slate-400 dark:text-slate-600">C++ · PYTHON · HTML · CSS · JS · SQL · REACT · TAILWIND · CISCO · VMware · DSA · AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Location & time -->
+        <div class="bento-card spotlight-card col-span-1 bg-slate-900 text-white rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden hoverable reveal-on-scroll delay-100">
+          <div class="spotlight-overlay"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-primary blur-3xl opacity-30 rounded-full"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-4 text-2xl animate-spin-slow">🇵🇰</div>
+            <h3 class="text-xl font-bold mb-1">Based in</h3>
+            <p class="text-slate-400">Rawalpindi, Pakistan</p>
+          </div>
+          <div class="relative z-10">
+            <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Local Time (PKT)</p>
+            <p id="local-time" class="text-3xl font-display font-bold font-mono">00:00</p>
+          </div>
+        </div>
+
+        <!-- Card 3: Status & social -->
+        <div class="bento-card spotlight-card col-span-1 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-8 flex flex-col justify-center gap-6 hoverable reveal-on-scroll delay-200">
+          <div class="spotlight-overlay"></div>
+          <div class="relative z-10">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs font-bold uppercase tracking-wide">
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Open for Opportunities
+            </span>
+          </div>
+          <div class="flex gap-4 text-2xl text-slate-600 dark:text-slate-400 relative z-10">
+            <a href="https://github.com/IsrAsif" target="_blank" rel="noopener" class="hover:text-primary transition-colors hover:scale-110 transform hoverable"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/isra-asif-3731852b8/" target="_blank" rel="noopener" class="hover:text-primary transition-colors hover:scale-110 transform hoverable"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:asifisra2@gmail.com" class="hover:text-primary transition-colors hover:scale-110 transform hoverable"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+
+        <!-- Card 4: Quote -->
+        <div class="bento-card spotlight-card col-span-1 md:col-span-2 bg-gradient-to-br from-primary to-secondary text-white rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden hoverable reveal-on-scroll delay-300">
+          <div class="spotlight-overlay"></div>
+          <i class="fas fa-quote-right absolute top-8 right-8 text-6xl text-white/10"></i>
+          <h3 class="text-2xl md:text-3xl font-display font-bold leading-tight relative z-10 max-w-lg">
+            "I enjoy turning ideas into reality through problem-solving, creative design, and efficient coding."
+          </h3>
+          <p class="mt-4 text-white/70 text-sm font-mono relative z-10">— Isra Asif</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="section-spy py-24 relative z-10">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 reveal-on-scroll">
+        <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-900 dark:text-white">
+          Selected<br>Projects<span class="text-primary">.</span>
+        </h2>
+        <p class="text-slate-500 text-sm md:text-base max-w-xs text-left md:text-right">
+          Real-world applications built from scratch with clean code and thoughtful design.
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-4 mb-16 reveal-on-scroll delay-100" id="portfolio-filters">
+        <button class="filter-btn active px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="all">All</button>
+        <button class="filter-btn px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="web">Web</button>
+        <button class="filter-btn px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="ai">AI / Python</button>
+        <button class="filter-btn px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="db">Database</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 md:gap-y-28" id="projects-grid">
+
+        <!-- Project 1: SmartLIB -->
+        <article class="project-item spotlight-card group cursor-pointer project-trigger hoverable reveal-on-scroll"
+                 data-filter-category="web db"
+                 data-title="SmartLIB — Library Management System"
+                 data-category="Web App • Database"
+                 data-desc="A smart library management system accessible via both web and mobile platforms. Features include book catalog management, borrowing/return tracking, member management, and real-time availability. Built with HTML, CSS, JavaScript and SQL via phpMyAdmin."
+                 data-tech="HTML, CSS, JavaScript, SQL, phpMyAdmin"
+                 data-year="2025 — Present">
+          <div class="spotlight-overlay"></div>
+          <div class="project-card relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5 transition-all duration-300">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-slate-900 flex items-center justify-center">
+              <div class="text-center z-10">
+                <i class="fas fa-book-open text-7xl text-indigo-400/60 mb-4 block"></i>
+                <span class="text-slate-300 font-display font-bold text-xl">SmartLIB</span>
+              </div>
+              <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+            </div>
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+          </div>
+          <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+            <div>
+              <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">SmartLIB</h3>
+              <p class="text-slate-500 text-sm">Web App • Library Management</p>
+            </div>
+            <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+              <i class="fas fa-plus group-hover:rotate-45 transition-transform text-xs"></i>
+            </span>
+          </div>
+        </article>
+
+        <!-- Project 2: UCMS -->
+        <article class="project-item spotlight-card group cursor-pointer md:mt-24 project-trigger hoverable reveal-on-scroll delay-100"
+                 data-filter-category="web db"
+                 data-title="University Complaints Management System"
+                 data-category="Web App • CRUD System"
+                 data-desc="A centralized web-based system for reporting and tracking complaints from students, faculty, and staff. Includes complaint submission, status tracking, admin dashboard, and email notification workflows. Designed to streamline university administration."
+                 data-tech="HTML, CSS, JavaScript, SQL, phpMyAdmin"
+                 data-year="April 2025">
+          <div class="spotlight-overlay"></div>
+          <div class="project-card relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5 transition-all duration-300">
+            <div class="absolute inset-0 bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-slate-900 flex items-center justify-center">
+              <div class="text-center z-10">
+                <i class="fas fa-university text-7xl text-violet-400/60 mb-4 block"></i>
+                <span class="text-slate-300 font-display font-bold text-xl">UCMS</span>
+              </div>
+              <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+            </div>
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+          </div>
+          <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+            <div>
+              <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">UCMS</h3>
+              <p class="text-slate-500 text-sm">Web App • Complaint Tracking</p>
+            </div>
+            <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+              <i class="fas fa-plus group-hover:rotate-45 transition-transform text-xs"></i>
+            </span>
+          </div>
+        </article>
+
+        <!-- Project 3: Sudoku AI -->
+        <article class="project-item spotlight-card group cursor-pointer project-trigger hoverable reveal-on-scroll"
+                 data-filter-category="ai"
+                 data-title="Sudoku Game — AI Project"
+                 data-category="AI • Python • GUI"
+                 data-desc="An AI-powered Sudoku solver and generator using the Backtracking algorithm. Features an interactive Tkinter GUI with difficulty levels, hint system, and animated solving mode that visually shows the backtracking algorithm in action. Built with NumPy for efficient grid manipulation."
+                 data-tech="Python, Tkinter, NumPy, Spyder, Backtracking Algorithm"
+                 data-year="November 2024">
+          <div class="spotlight-overlay"></div>
+          <div class="project-card relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5 transition-all duration-300">
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-teal-500/10 to-slate-900 flex items-center justify-center">
+              <div class="text-center z-10">
+                <i class="fas fa-brain text-7xl text-emerald-400/60 mb-4 block"></i>
+                <span class="text-slate-300 font-display font-bold text-xl">Sudoku AI</span>
+              </div>
+              <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+            </div>
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+          </div>
+          <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+            <div>
+              <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Sudoku AI</h3>
+              <p class="text-slate-500 text-sm">AI • Python • Backtracking Algorithm</p>
+            </div>
+            <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+              <i class="fas fa-plus group-hover:rotate-45 transition-transform text-xs"></i>
+            </span>
+          </div>
+        </article>
+
+        <!-- Project 4: Brand E-Commerce (Internship) -->
+        <article class="project-item spotlight-card group cursor-pointer md:mt-24 project-trigger hoverable reveal-on-scroll delay-100"
+                 data-filter-category="web design"
+                 data-title="Brand — E-Commerce Website"
+                 data-category="Frontend Design • Internship Project"
+                 data-desc="A fully responsive B2B e-commerce website built during the DevelopersHub Corporation Frontend Development Internship. A pixel-perfect Figma-to-code clone of an Alibaba-style marketplace called Brand. Features 4 complete pages: Home (hero banner, deals countdown, category sections, supplier form), Product Listing (filter sidebar, list/grid toggle, pagination), Product Detail (image gallery, price tiers, specs, tabs), and Shopping Cart (localStorage persistence, coupon system, order summary with tax). Live at israsif.github.io/ecommerce-frontend-design/"
+                 data-tech="HTML5, CSS3, Vanilla JavaScript, localStorage, Font Awesome, Google Fonts"
+                 data-year="2025 — DevelopersHub Corporation">
+          <div class="spotlight-overlay"></div>
+          <div class="project-card relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5 transition-all duration-300">
+            <div class="absolute inset-0 bg-gradient-to-br from-rose-500/25 via-orange-400/15 to-slate-900 flex items-center justify-center">
+              <!-- Decorative mock UI strips -->
+              <div class="absolute inset-0 flex flex-col gap-2 p-6 opacity-20 pointer-events-none">
+                <div class="h-6 bg-white/30 rounded w-2/3"></div>
+                <div class="h-3 bg-white/20 rounded w-full"></div>
+                <div class="flex gap-2 mt-2">
+                  <div class="h-16 bg-white/20 rounded flex-1"></div>
+                  <div class="h-16 bg-white/20 rounded flex-1"></div>
+                  <div class="h-16 bg-white/20 rounded flex-1"></div>
+                </div>
+                <div class="h-3 bg-white/15 rounded w-4/5 mt-1"></div>
+                <div class="h-3 bg-white/15 rounded w-3/5"></div>
+              </div>
+              <div class="text-center z-10 relative">
+                <i class="fas fa-shopping-bag text-7xl text-rose-400/70 mb-4 block"></i>
+                <span class="text-slate-300 font-display font-bold text-xl">Brand</span>
+                <span class="block text-slate-400 text-xs mt-1 font-medium tracking-widest uppercase">E-Commerce</span>
+              </div>
+              <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+            </div>
+            <!-- Internship badge -->
+            <div class="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-500/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider">
+              <i class="fas fa-briefcase text-[8px]"></i> Internship
+            </div>
+            <!-- Live link -->
+            <a href="https://israsif.github.io/ecommerce-frontend-design/" target="_blank" rel="noopener"
+               class="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-bold uppercase tracking-wider hover:bg-white/20 transition-colors"
+               onclick="event.stopPropagation()">
+              <i class="fas fa-external-link-alt text-[8px]"></i> Live
+            </a>
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+          </div>
+          <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+            <div>
+              <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Brand — E-Commerce</h3>
+              <p class="text-slate-500 text-sm">Frontend Design • DevelopersHub Internship</p>
+            </div>
+            <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+              <i class="fas fa-plus group-hover:rotate-45 transition-transform text-xs"></i>
+            </span>
+          </div>
+        </article>
+ 
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="section-spy py-24 bg-slate-50 dark:bg-[#080808]">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <div class="text-center mb-16 reveal-on-scroll">
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          Technical Skills<span class="text-primary">.</span>
+        </h2>
+        <p class="text-slate-500 max-w-lg mx-auto">Tools, languages, and technologies I work with.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Programming Languages -->
+        <div class="p-8 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 group hoverable reveal-on-scroll spotlight-card">
+          <div class="spotlight-overlay"></div>
+          <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 text-2xl group-hover:bg-primary group-hover:text-white transition-colors relative z-10">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-4 relative z-10">Languages</h3>
+          <div class="flex flex-wrap gap-2 relative z-10">
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">SQL</span>
+          </div>
+        </div>
+
+        <!-- Frameworks & Tools -->
+        <div class="p-8 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 group hoverable reveal-on-scroll delay-100 spotlight-card">
+          <div class="spotlight-overlay"></div>
+          <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 text-2xl group-hover:bg-primary group-hover:text-white transition-colors relative z-10">
+            <i class="fas fa-layer-group"></i>
+          </div>
+          <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-4 relative z-10">Frameworks & Tools</h3>
+          <div class="flex flex-wrap gap-2 relative z-10">
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">phpMyAdmin</span>
+            <span class="skill-tag">Tkinter</span>
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Canva</span>
+          </div>
+        </div>
+
+        <!-- Specialties -->
+        <div class="p-8 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 group hoverable reveal-on-scroll delay-200 spotlight-card">
+          <div class="spotlight-overlay"></div>
+          <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 text-2xl group-hover:bg-primary group-hover:text-white transition-colors relative z-10">
+            <i class="fas fa-microchip"></i>
+          </div>
+          <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-4 relative z-10">Specialties</h3>
+          <div class="flex flex-wrap gap-2 relative z-10">
+            <span class="skill-tag">DSA</span>
+            <span class="skill-tag">BFS / DFS</span>
+            <span class="skill-tag">Backtracking</span>
+            <span class="skill-tag">Hashing</span>
+            <span class="skill-tag">Cisco Packet Tracer</span>
+            <span class="skill-tag">VMware</span>
+            <span class="skill-tag">UltraISO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education" class="section-spy py-24 relative z-10">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-16 text-center reveal-on-scroll">
+        Education<span class="text-primary">.</span>
+      </h2>
+
+      <div class="relative border-l border-slate-200 dark:border-white/10 ml-4 md:ml-10 space-y-12">
+
+        <div class="relative pl-8 md:pl-12 group reveal-on-scroll">
+          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-primary transition-colors ring-4 ring-transparent group-hover:ring-primary/20"></span>
+          <div class="flex flex-col sm:flex-row gap-2 sm:items-center mb-2">
+            <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white group-hover:text-primary transition-colors">BS Computer Science</h3>
+            <span class="text-xs font-bold px-2 py-1 rounded bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 w-fit">Oct 2023 – 2027</span>
+          </div>
+          <p class="text-primary font-medium mb-2">Fatima Jinnah Women University</p>
+          <p class="text-slate-500 text-sm leading-relaxed max-w-2xl">Relevant Coursework: Data Structures, Operating Systems, Advanced DBMS, Software Engineering, AI, Networking</p>
+        </div>
+
+        <div class="relative pl-8 md:pl-12 group reveal-on-scroll delay-100">
+          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-primary transition-colors ring-4 ring-transparent group-hover:ring-primary/20"></span>
+          <div class="flex flex-col sm:flex-row gap-2 sm:items-center mb-2">
+            <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white group-hover:text-primary transition-colors">Intermediate in Computer Science (ICS)</h3>
+            <span class="text-xs font-bold px-2 py-1 rounded bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 w-fit">Aug 2021 – Aug 2023</span>
+          </div>
+          <p class="text-primary font-medium mb-2">Army Public School & College Pasban, Westridge III</p>
+          <p class="text-slate-500 text-sm leading-relaxed max-w-2xl">Completed intermediate education with a focus on Computer Science fundamentals and mathematics.</p>
+        </div>
+
+        <div class="relative pl-8 md:pl-12 group reveal-on-scroll delay-200">
+          <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-primary transition-colors ring-4 ring-transparent group-hover:ring-primary/20"></span>
+          <div class="flex flex-col sm:flex-row gap-2 sm:items-center mb-2">
+            <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white group-hover:text-primary transition-colors">Matriculation (Science)</h3>
+            <span class="text-xs font-bold px-2 py-1 rounded bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 w-fit">Aug 2019 – Aug 2021</span>
+          </div>
+          <p class="text-primary font-medium mb-2">Army Public School & College Pasban, Westridge III</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section id="certifications" class="section-spy py-24 bg-slate-50 dark:bg-[#080808]">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 reveal-on-scroll">
+        <h2 class="font-display text-4xl font-bold text-slate-900 dark:text-white">
+          Certifications<br>& Programs<span class="text-primary">.</span>
+        </h2>
+        <p class="text-slate-500 text-sm max-w-xs text-left md:text-right">Continuous learning through global programs and online certifications.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div class="cert-card p-6 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl hover:border-primary/50 transition-all duration-300 group hoverable reveal-on-scroll spotlight-card">
+          <div class="spotlight-overlay"></div>
+          <div class="flex items-start gap-4 relative z-10">
+            <div class="w-10 h-10 bg-red-50 dark:bg-red-900/20 rounded-lg flex items-center justify-center flex-shrink-0 text-red-500 text-lg">🎓</div>
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Aspire Leaders Program — Cohort III</h4>
+              <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Aspire Institute · Harvard University Initiative</p>
+              <p class="text-slate-500 text-sm">Elite leadership development program affiliated with Harvard University.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-card p-6 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl hover:border-primary/50 transition-all duration-300 group hoverable reveal-on-scroll delay-100 spotlight-card">
+          <div class="spotlight-overlay"></div>
+          <div class="flex items-start gap-4 relative z-10">
+            <div class="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center flex-shrink-0 text-blue-500 text-lg">🌍</div>
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">OMLAS Champions Empowerment Program 2025</h4>
+              <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Leadership · SDGs · Social Entrepreneurship</p>
+              <p class="text-slate-500 text-sm">Focused on global leadership, sustainable development goals, and entrepreneurship.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-card p-6 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl hover:border-primary/50 transition-all duration-300 group hoverable reveal-on-scroll spotlight-card">
+          <div class="spotlight-overlay"></div>
+          <div class="flex items-start gap-4 relative z-10">
+            <div class="w-10 h-10 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center flex-shrink-0 text-green-500 text-lg"><i class="fab fa-google text-sm"></i></div>
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Google Project Management Professional Certificate</h4>
+              <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Google · Coursera</p>
+              <p class="text-slate-500 text-sm">Professional certification covering project management methodologies and tools.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://www.coursera.org/account/accomplishments/verify/6HU7QYKDS0AJ" target="_blank" rel="noopener"
+           class="cert-card p-6 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl hover:border-primary/50 transition-all duration-300 group hoverable reveal-on-scroll delay-100 spotlight-card block">
+          <div class="spotlight-overlay"></div>
+          <div class="flex items-start gap-4 relative z-10">
+            <div class="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center flex-shrink-0 text-purple-500 text-lg">📊</div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Unordered Data Structures</h4>
+                <i class="fas fa-external-link-alt text-xs text-slate-400 group-hover:text-primary transition-colors"></i>
+              </div>
+              <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">University of Illinois Urbana-Champaign · Coursera</p>
+              <p class="text-slate-500 text-sm">Hash tables, disjoint sets, and heap data structures.</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.coursera.org/account/accomplishments/verify/C18QGHGJPZYV" target="_blank" rel="noopener"
+           class="cert-card p-6 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl hover:border-primary/50 transition-all duration-300 group hoverable reveal-on-scroll spotlight-card block">
+          <div class="spotlight-overlay"></div>
+          <div class="flex items-start gap-4 relative z-10">
+            <div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg flex items-center justify-center flex-shrink-0 text-indigo-500 text-lg">🌲</div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Ordered Data Structures</h4>
+                <i class="fas fa-external-link-alt text-xs text-slate-400 group-hover:text-primary transition-colors"></i>
+              </div>
+              <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">University of Illinois Urbana-Champaign · Coursera</p>
+              <p class="text-slate-500 text-sm">Trees, AVL trees, B-trees, and ordered data management.</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.coursera.org/account/accomplishments/verify/OCLV1G2B6I7S" target="_blank" rel="noopener"
+           class="cert-card p-6 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-2xl hover:border-primary/50 transition-all duration-300 group hoverable reveal-on-scroll delay-100 spotlight-card block">
+          <div class="spotlight-overlay"></div>
+          <div class="flex items-start gap-4 relative z-10">
+            <div class="w-10 h-10 bg-amber-50 dark:bg-amber-900/20 rounded-lg flex items-center justify-center flex-shrink-0 text-amber-500 text-lg">💬</div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Conversational English Skills</h4>
+                <i class="fas fa-external-link-alt text-xs text-slate-400 group-hover:text-primary transition-colors"></i>
+              </div>
+              <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Tsinghua University · Coursera</p>
+              <p class="text-slate-500 text-sm">Advanced conversational English for professional settings.</p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="section-spy py-24 md:py-32 relative overflow-hidden bg-slate-100 dark:bg-[#080808]">
+    <div class="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 relative z-10 max-w-5xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <div class="text-center lg:text-left">
+          <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tighter leading-tight reveal-on-scroll">
+            Let's build<br>something
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">amazing.</span>
+          </h2>
+          <p class="text-slate-500 mb-8 text-lg reveal-on-scroll delay-100">
+            Whether for collaboration, opportunities, or just a chat — my inbox is always open.
+          </p>
+          <div class="space-y-4 text-left hidden lg:block reveal-on-scroll delay-200">
+            <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+              <i class="fas fa-envelope text-primary w-6"></i>
+              <a href="mailto:asifisra2@gmail.com" class="hover:text-primary transition-colors">asifisra2@gmail.com</a>
+            </div>
+            <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+              <i class="fas fa-phone text-primary w-6"></i>
+              <span>+92 334 7987572</span>
+            </div>
+            <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+              <i class="fas fa-map-marker-alt text-primary w-6"></i>
+              <span>Rawalpindi, Pakistan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-surface p-8 rounded-3xl shadow-xl border border-slate-200 dark:border-white/10 reveal-on-scroll delay-300">
+          <form class="space-y-6" id="contact-form">
+            <div>
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Name</label>
+              <input type="text" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all dark:text-white" placeholder="Your Name" required>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Email</label>
+              <input type="email" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all dark:text-white" placeholder="your@email.com" required>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Message</label>
+              <textarea rows="4" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all dark:text-white resize-none" placeholder="Tell me about your project or opportunity..." required></textarea>
+            </div>
+            <button type="submit" class="w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg hoverable">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-24 pt-8 border-t border-slate-200 dark:border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 reveal-on-scroll">
+        <div class="flex gap-6 mb-4 md:mb-0">
+          <a href="https://www.linkedin.com/in/isra-asif-3731852b8/" target="_blank" rel="noopener" class="hover:text-primary transition-colors hoverable">LinkedIn</a>
+          <a href="https://github.com/IsrAsif" target="_blank" rel="noopener" class="hover:text-primary transition-colors hoverable">GitHub</a>
+          <a href="mailto:asifisra2@gmail.com" class="hover:text-primary transition-colors hoverable">Email</a>
+        </div>
+        <div>© <span id="year">2025</span> Isra Asif · Fatima Jinnah Women University</div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- Project Modal -->
+  <div id="project-modal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0" id="modal-backdrop"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+      <div class="bg-white dark:bg-[#111] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto border border-slate-200 dark:border-white/10" id="modal-content">
+        <div class="relative">
+          <button id="close-modal" aria-label="Close modal" class="absolute top-4 right-4 w-10 h-10 bg-white/50 dark:bg-black/50 backdrop-blur rounded-full flex items-center justify-center text-slate-900 dark:text-white hover:bg-red-500 hover:text-white transition-colors z-10 hoverable">
+            <i class="fas fa-times"></i>
+          </button>
+
+          <!-- Modal visual placeholder -->
+          <div id="modal-img-wrap" class="h-56 md:h-72 w-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20">
+            <i id="modal-icon" class="fas fa-code text-8xl text-primary/30"></i>
+          </div>
+
+          <div class="p-8 md:p-12">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
+              <div>
+                <span id="modal-category" class="text-primary font-bold text-sm tracking-widest uppercase mb-2 block">Category</span>
+                <h2 id="modal-title" class="text-3xl md:text-4xl font-display font-bold text-slate-900 dark:text-white">Project Title</h2>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div class="md:col-span-2">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">About the Project</h3>
+                <p id="modal-desc" class="text-slate-600 dark:text-slate-300 leading-relaxed text-base">Description here.</p>
+              </div>
+              <div class="space-y-6">
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">Tech Stack</h4>
+                  <div id="modal-tech" class="flex flex-wrap gap-2"></div>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2">Year</h4>
+                  <p id="modal-year" class="text-slate-600 dark:text-slate-400">2025</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll to top -->
+  <button id="scrollToTopBtn" aria-label="Scroll to top" class="fixed bottom-8 right-8 z-50 w-12 h-12 bg-white dark:bg-surface border border-slate-200 dark:border-white/20 rounded-full flex items-center justify-center text-slate-600 dark:text-white shadow-lg translate-y-20 opacity-0 transition-all duration-300 hover:border-primary hover:text-primary hover:-translate-y-1 hoverable">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
