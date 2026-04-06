@@ -83,7 +83,7 @@
         <a href="#projects"       class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Projects</a>
         <a href="#skills"         class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Skills</a>
         <a href="#education"      class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Education</a>
-        <a href="#certifications" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Certs</a>
+        <a href="#certifications" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Certification</a>
         <a href="#contact" class="px-5 py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-xs hover:scale-105 transition-transform hoverable magnetic-btn">Contact</a>
       </div>
 
@@ -279,15 +279,17 @@
                  data-category="Web App • Database"
                  data-desc="A smart library management system accessible via both web and mobile platforms. Features include book catalog management, borrowing/return tracking, member management, and real-time availability. Built with HTML, CSS, JavaScript and SQL via phpMyAdmin."
                  data-tech="HTML, CSS, JavaScript, SQL, phpMyAdmin"
-                 data-year="2025 — Present">
+                 data-year="2025 — Present"
+                 data-preview="images\smartlib-dashboard.png">
           <div class="spotlight-overlay"></div>
           <div class="project-card relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5 transition-all duration-300">
-            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-slate-900 flex items-center justify-center">
-              <div class="text-center z-10">
-                <i class="fas fa-book-open text-7xl text-indigo-400/60 mb-4 block"></i>
-                <span class="text-slate-300 font-display font-bold text-xl">SmartLIB</span>
-              </div>
-              <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+            <div class="absolute inset-0">
+              <img src="images\smartlib-bg.png" alt="SmartLIB" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-black/20 group-hover:bg-black/5 transition-colors duration-500"></div>
+            </div>
+            <!-- University badge -->
+            <div class="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider">
+              <i class="fas fa-graduation-cap text-[8px]"></i> University
             </div>
             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
           </div>
@@ -301,7 +303,7 @@
             </span>
           </div>
         </article>
-
+ 
         <!-- Project 2: UCMS -->
         <article class="project-item spotlight-card group cursor-pointer md:mt-24 project-trigger hoverable reveal-on-scroll delay-100"
                  data-filter-category="web db"
@@ -319,6 +321,10 @@
               </div>
               <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
             </div>
+            <!-- University badge -->
+            <div class="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider">
+              <i class="fas fa-graduation-cap text-[8px]"></i> University
+            </div>
             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
           </div>
           <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
@@ -331,7 +337,7 @@
             </span>
           </div>
         </article>
-
+ 
         <!-- Project 3: Sudoku AI -->
         <article class="project-item spotlight-card group cursor-pointer project-trigger hoverable reveal-on-scroll"
                  data-filter-category="ai"
@@ -349,6 +355,10 @@
               </div>
               <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
             </div>
+            <!-- University badge -->
+            <div class="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider">
+              <i class="fas fa-graduation-cap text-[8px]"></i> University
+            </div>
             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
           </div>
           <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
@@ -361,6 +371,7 @@
             </span>
           </div>
         </article>
+
 
         <!-- Project 4: Brand E-Commerce (Internship) -->
         <article class="project-item spotlight-card group cursor-pointer md:mt-24 project-trigger hoverable reveal-on-scroll delay-100"

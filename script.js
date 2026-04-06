@@ -155,7 +155,13 @@ function openModal(data) {
   document.getElementById('modal-desc').textContent     = data.desc;
   document.getElementById('modal-year').textContent     = data.year;
 
-  // Tech tags
+  // Modal header — real screenshot or gradient fallback
+  const imgWrap = document.getElementById('modal-img-wrap');
+  if (data.preview) {
+    imgWrap.innerHTML = `<img src="${data.preview}" alt="${data.title}" style="display:block; width:100%; max-height:400px; object-fit:cover; object-position:top;">`;
+  } else {
+    imgWrap.innerHTML = `<div class="h-56 md:h-72 flex items-center justify-center bg-gradient-to-br from-indigo-500/20 to-purple-500/20"><i class="fas fa-code text-8xl text-primary/30"></i></div>`;
+  }
   const techContainer = document.getElementById('modal-tech');
   techContainer.innerHTML = '';
   data.tech.split(',').forEach(t => {
@@ -192,6 +198,7 @@ document.querySelectorAll('.project-trigger').forEach(trigger => {
       desc:     trigger.dataset.desc,
       tech:     trigger.dataset.tech,
       year:     trigger.dataset.year,
+      preview:  trigger.dataset.preview || '',
     });
   });
 });
