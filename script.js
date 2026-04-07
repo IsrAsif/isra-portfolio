@@ -198,7 +198,7 @@ document.querySelectorAll('.project-trigger').forEach(trigger => {
       desc:     trigger.dataset.desc,
       tech:     trigger.dataset.tech,
       year:     trigger.dataset.year,
-      preview:  trigger.dataset.preview || '',
+      preview:  trigger.dataset.modalImg || trigger.dataset.preview || '',
     });
   });
 });
